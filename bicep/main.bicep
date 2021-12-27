@@ -37,6 +37,10 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
           value: 'true'
         }
         {
+          name: 'DOCKER_REGISTRY_SERVER_URL'
+          value: 'https://index.docker.io'
+        }
+        {
           name: 'DOCKER_REGISTRY_SERVER_USERNAME'
           value: dockerUsername
         }
