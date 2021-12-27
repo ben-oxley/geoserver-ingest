@@ -20,7 +20,5 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./bicep/main.bicep
-        parameters: 
-          - dockerPassword=${{secrets.DOCKER_PASSWORD}}
-          - dockerUsername=${{secrets.DOCKER_USERNAME}}
+        parameters: dockerPassword=${{secrets.DOCKER_PASSWORD}} dockerUsername=${{secrets.DOCKER_USERNAME}}
         failOnStdErr: false
