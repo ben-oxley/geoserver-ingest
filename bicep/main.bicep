@@ -61,7 +61,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
 
 
 resource geostorage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: 'geo-storage'
+  name: 'geostorage'
   location: resourceGroup().location
   kind: 'StorageV2'
   sku: {
