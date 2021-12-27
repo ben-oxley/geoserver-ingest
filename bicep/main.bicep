@@ -45,7 +45,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
           value: dockerPassword
         }
       ]
-      linuxFxVersion: 'DOCKER|docker.io/coderpatros/geoserver-azure-web-app'
+      linuxFxVersion: 'DOCKER|coderpatros/geoserver-azure-web-app'
     }
     serverFarmId: appServicePlan.id
   }
