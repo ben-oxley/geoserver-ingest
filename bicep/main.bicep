@@ -34,7 +34,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
       appSettings: [
         {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
-          value: 'false'
+          value: 'true'
         }
         {
           name: 'DOCKER_REGISTRY_SERVER_URL'
@@ -47,10 +47,6 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'DOCKER_REGISTRY_SERVER_PASSWORD'
           value: dockerPassword
-        }
-        {
-          name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
-          value: 'true'
         }
       ]
       linuxFxVersion: 'DOCKER|patroscoder/geoserver-azure-web-app'
