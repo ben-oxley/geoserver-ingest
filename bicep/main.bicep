@@ -1,6 +1,6 @@
 param webAppName string = uniqueString(resourceGroup().id) // Generate unique String for web app name
 
-param sku string = 'B1' // The SKU of App Service Plan
+param sku string = 'B3' // The SKU of App Service Plan
 
 param location string = resourceGroup().location // Location for all resources
 
@@ -35,10 +35,6 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
           value: 'true'
-        }
-        {
-          name: 'DOCKER_REGISTRY_SERVER_URL'
-          value: 'https://docker.io'
         }
         {
           name: 'DOCKER_REGISTRY_SERVER_USERNAME'
