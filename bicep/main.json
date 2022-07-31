@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1124.51302",
-      "templateHash": "884656426150849217"
+      "templateHash": "16137288550315081576"
     }
   },
   "parameters": {
@@ -15,7 +15,7 @@
     },
     "sku": {
       "type": "string",
-      "defaultValue": "B1"
+      "defaultValue": "B3"
     },
     "location": {
       "type": "string",
@@ -30,7 +30,8 @@
   },
   "variables": {
     "appServicePlanName": "[toLower(format('AppServicePlan-{0}', parameters('webAppName')))]",
-    "webSiteName": "[toLower(format('wapp-{0}', parameters('webAppName')))]"
+    "webSiteName": "[toLower(format('wapp-{0}', parameters('webAppName')))]",
+    "mountPath": "datastorage"
   },
   "resources": [
     {
@@ -56,11 +57,11 @@
           "appSettings": [
             {
               "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
-              "value": "false"
+              "value": "true"
             },
             {
               "name": "DOCKER_REGISTRY_SERVER_URL",
-              "value": "https://hub.docker.com"
+              "value": "https://index.docker.io"
             },
             {
               "name": "DOCKER_REGISTRY_SERVER_USERNAME",
@@ -69,13 +70,9 @@
             {
               "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
               "value": "[parameters('dockerPassword')]"
-            },
-            {
-              "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
-              "value": "true"
             }
           ],
-          "linuxFxVersion": "DOCKER|patroscoder/geoserver-azure-web-app"
+          "linuxFxVersion": "DOCKER|coderpatros/geoserver-azure-web-app"
         },
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
       },
@@ -86,12 +83,37 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2021-02-01",
-      "name": "geo-storage",
+      "name": "geostorage",
       "location": "[resourceGroup().location]",
       "kind": "StorageV2",
       "sku": {
         "name": "Standard_LRS"
       }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2019-06-01",
+      "name": "[format('{0}/default/share', 'geostorage')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', 'geostorage')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2021-01-15",
+      "name": "[format('{0}/azurestorageaccounts', parameters('webAppName'))]",
+      "properties": {
+        "[format('{0}', 'geostorage')]": {
+          "type": "AzureFiles",
+          "shareName": "geostorage",
+          "mountPath": "[variables('mountPath')]",
+          "accountName": "geostorage",
+          "accessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', 'geostorage'), '2021-02-01').keys[0].value]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', 'geostorage')]"
+      ]
     }
   ]
 }

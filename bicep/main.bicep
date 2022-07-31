@@ -8,6 +8,8 @@ var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 
 var webSiteName = toLower('wapp-${webAppName}')
 
+var mountPath = 'datastorage'
+
 @secure()
 param dockerUsername string
 @secure()
@@ -64,3 +66,21 @@ resource geostorage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
     name: 'Standard_LRS'
   }
 }
+
+resource myStorage 'Microsoft.Storage/storageAccounts/fileServices/shares@2019-06-01' = {
+  name: '${geostorage.name}/default/share'
+}
+
+resource storageSetting 'Microsoft.Web/sites/config@2021-01-15' = {
+  name: '${webAppName}/azurestorageaccounts'
+  properties: {
+    '${geostorage.name}': {
+      type: 'AzureFiles'
+      shareName: geostorage.name
+      mountPath: mountPath
+      accountName: geostorage.name      
+      accessKey: listKeys(geostorage.id, geostorage.apiVersion).keys[0].value
+    }
+  }
+}
+
