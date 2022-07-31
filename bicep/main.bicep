@@ -72,7 +72,7 @@ resource myStorage 'Microsoft.Storage/storageAccounts/fileServices/shares@2019-0
 }
 
 resource storageSetting 'Microsoft.Web/sites/config@2021-01-15' = {
-  name: '${webAppName}/azurestorageaccounts'
+  name: '${webSiteName}/azurestorageaccounts'
   properties: {
     '${geostorage.name}': {
       type: 'AzureFiles'
