@@ -8,7 +8,7 @@ var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 
 var webSiteName = toLower('wapp-${webAppName}')
 
-var mountPath = 'datastorage'
+var mountPath = '/datastorage'
 
 @secure()
 param dockerUsername string
