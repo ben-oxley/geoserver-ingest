@@ -71,16 +71,16 @@ resource myStorage 'Microsoft.Storage/storageAccounts/fileServices/shares@2019-0
   name: '${geostorage.name}/default/share'
 }
 
-resource storageSetting 'Microsoft.Web/sites/config@2021-01-15' = {
-  name: '${webSiteName}/azurestorageaccounts'
-  properties: {
-    '${geostorage.name}': {
-      type: 'AzureFiles'
-      shareName: geostorage.name
-      mountPath: mountPath
-      accountName: geostorage.name      
-      accessKey: listKeys(geostorage.id, geostorage.apiVersion).keys[0].value
-    }
-  }
-}
+// resource storageSetting 'Microsoft.Web/sites/config@2021-01-15' = {
+//   name: '${webSiteName}/azurestorageaccounts'
+//   properties: {
+//     '${geostorage.name}': {
+//       type: 'AzureFiles'
+//       shareName: geostorage.name
+//       mountPath: mountPath
+//       accountName: geostorage.name      
+//       accessKey: listKeys(geostorage.id, geostorage.apiVersion).keys[0].value
+//     }
+//   }
+// }
 
