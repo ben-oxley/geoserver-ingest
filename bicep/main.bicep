@@ -30,7 +30,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
 }
 resource appService 'Microsoft.Web/sites@2020-06-01' = {
   name: webSiteName
-  location: resourceGroup().location
+  location: location
   properties: {
     siteConfig: {
       appSettings: [
@@ -60,7 +60,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
 
 resource geostorage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   name: 'geostorage'
-  location: resourceGroup().location
+  location: location
   kind: 'StorageV2'
   sku: {
     name: 'Standard_LRS'
