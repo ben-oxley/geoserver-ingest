@@ -8,7 +8,7 @@ var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 
 var webSiteName = toLower('wapp-${webAppName}')
 
-var mountPath = '/datastorage'
+//var mountPath = '/datastorage'
 
 @secure()
 param dockerUsername string
@@ -51,7 +51,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
           value: dockerPassword
         }
       ]
-      linuxFxVersion: 'DOCKER|coderpatros/geoserver-azure-web-app'
+      linuxFxVersion: 'DOCKER|geonode/geoserver:2.20.5'
     }
     serverFarmId: appServicePlan.id
   }
