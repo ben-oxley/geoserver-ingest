@@ -66,13 +66,15 @@ namespace MyCompany.MyApp
                 Location = loc,
                 AppSettings = new Dictionary<string,string>(){
                     {"WEBSITES_PORT","8080"},
-                    {"WEBSITES_ENABLE_APP_SERVICE_STORAGE","true"}
+                    {"WEBSITES_ENABLE_APP_SERVICE_STORAGE","true"},
+                    {"GEOSERVER_DATA_DIR","/var/geoserver/datadir"},
+                    {"SAMPLE_DATA","true"}
                 },
                 
                 SiteConfig = new LinuxWebAppSiteConfig(){
                     ApplicationStack = new LinuxWebAppSiteConfigApplicationStack(){
-                        DockerImage = "geosolutionsit/geoserver",
-                        DockerImageTag = "2.20.4",
+                        DockerImage = "kartoza/geoserver",
+                        DockerImageTag = "2.21.0",
 
                     }
                     
